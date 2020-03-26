@@ -1,0 +1,98 @@
+﻿@model Holiday.Web.ViewModels.HolidayPageViewModel
+
+@{
+    ViewData["Title"] = "My Holidays";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-6 row">
+        <h5>My Holidays</h5>
+        @if (Model.EmployeeTotalDaysLeft > 0)
+        {
+            <a class="pad-left-10 color-dark" asp-action="Create" data-toggle="tooltip" title="Create"><i class="fas fa-plus-circle"></i></a>
+        }
+    </div>
+    <div class="col-sm-6">
+        <input type="text" class="float-right" id="input" onkeyup="FilterTable(this, 'holidaysTablebody')" placeholder="Smart Search.." />
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-sm-4 text-center">
+        @Html.DisplayNameFor(model => model.EmloyeeFullName): <b>@Html.DisplayFor(model => model.EmloyeeFullName)</b>
+    </div>
+    <div class="col-sm-4 text-center">
+        @Html.DisplayNameFor(model => model.EmployeeTotalNoOfDays):<b> @Html.DisplayFor(model => model.EmployeeTotalNoOfDays)</b>
+    </div>
+    <div class="col-sm-3 text-center">
+        @Html.DisplayNameFor(model => model.EmployeeTotalDaysLeft)<text>:</text><b> @Html.DisplayFor(model => model.EmployeeTotalDaysLeft)</b>
+    </div>
+</div>
+
+<br />
+
+<table class="table table-hover" id="holidaysTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Start Date", "Index", new { sortOrder = ViewBag.StartSortParam }, new { @class = "color-dark" })
+            </th>
+            <th>
+                @Html.ActionLink("End Date", "Index", new { sortOrder = ViewBag.EndSortParam }, new { @class = "color-dark" })
+            </th>
+            <th>
+                @Html.ActionLink("Days", "Index", new { sortOrder = ViewBag.DaysSortParam }, new { @class = "color-dark" })
+            </th>
+            <th>
+                @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.TypeSortParam }, new { @class = "color-dark" })
+            </th>
+            <th>
+                @Html.ActionLink("Type", "Index", new { sortOrder = ViewBag.StatusSortParam }, new { @class = "color-dark" })
+            </th>
+            <th>
+                @Html.ActionLink("Modified on", "Index", new { sortOrder = ViewBag.ModifiedOnSortParam }, new { @class = "color-dark" })
+            </th>
+            <th>
+                @Html.ActionLink("Approver", "Index", new { sortOrder = ViewBag.ApproverSortParam }, new { @class = "color-dark" })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="holidaysTablebody">
+        @foreach (var item in Model.Holidays)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoOfDays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Approver.FullName)
+                </td>
+                <td>
+                    @if (item.Status == Constants.Status.Pending)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.HolidayRequestId" data-toggle="tooltip" title="Edit"><i class="fas fa-edit color-dark"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.HolidayRequestId" data-toggle="tooltip" title="Delete"><i class="fas fa-trash-alt color-dark"></i></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
