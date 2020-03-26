@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\manue\\source\\repos\\HolidayProjectApp\\Holiday.Web\\Holiday.Web.csproj": {}
+    "C:\\Users\\manue\\Desktop\\HolidayProjectApp\\Holiday.Web\\Holiday.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\manue\\source\\repos\\HolidayProjectApp\\Holiday.Web\\Holiday.Web.csproj": {
+    "C:\\Users\\manue\\Desktop\\HolidayProjectApp\\Holiday.Web\\Holiday.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\manue\\source\\repos\\HolidayProjectApp\\Holiday.Web\\Holiday.Web.csproj",
+        "projectUniqueName": "C:\\Users\\manue\\Desktop\\HolidayProjectApp\\Holiday.Web\\Holiday.Web.csproj",
         "projectName": "Holiday.Web",
-        "projectPath": "C:\\Users\\manue\\source\\repos\\HolidayProjectApp\\Holiday.Web\\Holiday.Web.csproj",
+        "projectPath": "C:\\Users\\manue\\Desktop\\HolidayProjectApp\\Holiday.Web\\Holiday.Web.csproj",
         "packagesPath": "C:\\Users\\manue\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\manue\\source\\repos\\HolidayProjectApp\\Holiday.Web\\obj\\",
+        "outputPath": "C:\\Users\\manue\\Desktop\\HolidayProjectApp\\Holiday.Web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\manue\\AppData\\Roaming\\NuGet\\NuGet.Config",

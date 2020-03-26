@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Holiday.Web", "Holiday.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Holiday.Test", "Holiday.Test\Holiday.Test.csproj", "{4934D703-26C7-4AFC-AA5B-34297B952BDA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{39C38F64-72F4-4B4D-9846-DC8B9B958322}"
+	ProjectSection(SolutionItems) = preProject
+		..\HolidaysProject\Holiday App  Specs.docx = ..\HolidaysProject\Holiday App  Specs.docx
+		..\HolidaysProject\TestCase Holidays Project.xlsx = ..\HolidaysProject\TestCase Holidays Project.xlsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
