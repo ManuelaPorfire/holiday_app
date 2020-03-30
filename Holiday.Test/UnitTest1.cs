@@ -36,8 +36,8 @@ namespace Holiday.Test
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Url = "https://localhost:44382/Identity/Account/Login?ReturnUrl=%2F";
-            driver.FindElement(By.XPath("/html/body/header/nav/div/div/ul[2]/li/a")).Click();
-
+            driver.FindElement(By.Id("holidays")).Click();
+            
             Assert.AreEqual("Log in - Holidays App", driver.Title);
 
             driver.Quit();
@@ -251,16 +251,16 @@ namespace Holiday.Test
 
             IWebElement endDate = driver.FindElement(By.Id("EndDate"));
             endDate.Click();
-            endDate.SendKeys("06/03/20202");
+            endDate.SendKeys("06/02/20202");
 
             var type = driver.FindElement(By.Id("Type"));
             var selectElement = new SelectElement(type);
             selectElement.SelectByText("Medical");
 
-            driver.FindElement(By.XPath("/html/body/div/main/div[2]/div/form/div[4]/input")).Click();
+            driver.FindElement(By.ClassName("btn-primary")).Click();
             IWebElement errorMessage = driver.FindElement(By.ClassName("field-validation-error"));
 
-            Assert.IsTrue(errorMessage.Text.Contains("The value '20202-06-03' is not valid for End Date."));
+            Assert.IsTrue(errorMessage.Text.Contains("The value '20202-06-02' is not valid for End Date."));
 
             driver.Quit();
         }
@@ -487,7 +487,7 @@ namespace Holiday.Test
             driver.FindElement(By.ClassName("btn-primary")).Click();
             IWebElement errorMessage = driver.FindElement(By.ClassName("validation-summary-errors"));
 
-            Assert.AreEqual("There are holidays between 02/06/2020 and 02/06/2020. Please re-enter", errorMessage.Text);
+            Assert.AreEqual("There are holidays between 06/02/2020 and 06/02/2020. Please re-enter", errorMessage.Text);
 
             driver.Quit();
         }
@@ -584,11 +584,6 @@ namespace Holiday.Test
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Url = "https://localhost:44382/";
-            driver.FindElement(By.CssSelector("#account>div:nth-child(8)>p:nth-child(2)>a")).Click();
-
-            IWebElement fullName = driver.FindElement(By.Id("Input_FullName"));
-            fullName.Click();
-            fullName.SendKeys("Roxana Bob");
 
             IWebElement email = driver.FindElement(By.Id("Input_Email"));
             email.Click();
@@ -597,10 +592,6 @@ namespace Holiday.Test
             IWebElement password = driver.FindElement(By.Name("Input.Password"));
             password.Click();
             password.SendKeys("RoxanaBob1111?");
-
-            IWebElement confirmPassword = driver.FindElement(By.Id("Input_ConfirmPassword"));
-            confirmPassword.Click();
-            confirmPassword.SendKeys("RoxanaBob1111?");
 
             driver.FindElement(By.ClassName("btn-primary")).Click();
             IWebElement holidaysLeft = driver.FindElement(By.XPath("/html/body/div/main/div[2]/div[3]/b"));
@@ -789,7 +780,7 @@ namespace Holiday.Test
             smartSearch.Click();
             smartSearch.SendKeys("Training");
 
-            IWebElement training = driver.FindElement(By.XPath("/html/body/div/main/table/tbody/tr[2]/td[5]"));
+            IWebElement training = driver.FindElement(By.XPath("//*[@id='holidaysTablebody']/tr[1]/td[5]"));
             Assert.IsTrue(training.Text.Contains("Training"));
 
             driver.Quit();
@@ -921,6 +912,90 @@ namespace Holiday.Test
             Console.WriteLine("The status of request is: " + statusdecliend.Text);
 
             driver.Quit();
+        }
+
+        [Test]
+
+        public void TC030_TheBehaviourOfCurrentYearHolidayOnEmployeePage_biggerThan21()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            driver.Url = "https://localhost:44382/";
+
+            IWebElement emailField = driver.FindElement(By.Name("Input.Email"));
+            emailField.Click();
+            emailField.SendKeys("manuelaporfire@gmail.com");
+
+            IWebElement password = driver.FindElement(By.Name("Input.Password"));
+            password.Click();
+            password.SendKeys("VY!N3vt9usCSAF5");
+
+            driver.FindElement(By.ClassName("btn-primary")).Click();
+            driver.FindElement(By.Id("Employees")).Click();
+            driver.FindElement(By.XPath("//*[@id='employeeTableBody']/tr[2]/td[5]/a/i")).Click();
+            IWebElement department = driver.FindElement(By.Id("Department"));
+
+            Random rnd = new Random();
+            var randomChar = String.Format(Convert.ToString((char)rnd.Next('a', 'z')));
+            department.SendKeys(randomChar);
+
+            IWebElement currentYearHoliday = driver.FindElement(By.Id("CurentYearHolidaysNumber"));
+            currentYearHoliday.Click();
+            Random random = new Random();
+            string yearHoliday = String.Format($"2{random.Next(2,9)}");
+            currentYearHoliday.SendKeys(yearHoliday);
+
+            driver.FindElement(By.ClassName("btn-primary")).Click();
+
+            Assert.AreEqual("Employees - Holidays App", driver.Title);
+            Console.WriteLine("The number of days was change in  "
+                             + driver.FindElement(By.XPath("//*[@id='employeeTableBody']/tr[2]/td[3]")).Text);
+
+            driver.Quit();
+
+        }
+
+        [Test]
+
+        public void TC031_TheBehaviourOfCurrentYearHolidayOnEmployeePage_lessThan21()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            driver.Url = "https://localhost:44382/";
+
+            IWebElement emailField = driver.FindElement(By.Name("Input.Email"));
+            emailField.Click();
+            emailField.SendKeys("manuelaporfire@gmail.com");
+
+            IWebElement password = driver.FindElement(By.Name("Input.Password"));
+            password.Click();
+            password.SendKeys("VY!N3vt9usCSAF5");
+
+            driver.FindElement(By.ClassName("btn-primary")).Click();
+            driver.FindElement(By.Id("Employees")).Click();
+            driver.FindElement(By.XPath("/html/body/div/main/table/tbody/tr[1]/td[5]/a/i")).Click();
+
+            IWebElement department = driver.FindElement(By.Id("Department"));
+            department.Click();
+            department.Clear();
+            department.SendKeys("HR");
+
+            IWebElement currentYearHolidays = driver.FindElement(By.Id("CurentYearHolidaysNumber"));
+            currentYearHolidays.Click();
+            currentYearHolidays.Clear();
+            Random rnd = new Random();
+            string currentYear = String.Format($"1{ rnd.Next(1,9)}");
+            currentYearHolidays.SendKeys(currentYear);
+
+            driver.FindElement(By.ClassName("btn-primary")).Click();
+
+            Assert.AreEqual("Employees - Holidays App", driver.Title);
+            Console.WriteLine("The number of days was change in  "
+                             + driver.FindElement(By.XPath("/html/body/div/main/table/tbody/tr[1]/td[3]")).Text);
+
+            driver.Quit();
+
+
         }
     }
 
